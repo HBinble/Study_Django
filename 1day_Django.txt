@@ -1,0 +1,126 @@
+Django
+가. 가상환경 설정
+	1. 폴더 만들기(cd 폴더위치)
+	2. django 라이브러리 설치 
+	-conda install -c conda-forge Django
+	3. django python 라이브러리가 잘 설치 되었는지 확인
+	-conda list | findstr django
+
+나. 새로운 프로젝트 시작
+	1. Django 프로젝트 만들기 ->config 뒤에 한칸 띄우고 점(.)
+	- django-admin startproject config .
+	2. Anaconda prompt에서 VS code 실행하기
+	- code .
+	3. VS code에서 터미널 실행하기
+	- 메뉴 -> 보기 -> 터미널
+	4. 터미널에서 웹서버 실행하기
+	- VS code 터미널에서 아래코드후 입력(터미널보다는 prompt에서 사용)
+	-- 웹서버 구동을 위한 코드
+	1) python manage.py runserver(명령 수시로 사용! 암기하기)
+	-- URL 복사하여 웹브라우저 URL 주소창 붙여놓은 후 Enter
+	2) http://127.0.0.1:8000/ = 웹서버 구축 성공
+	-> db.sqlite3(django에서 자동으로 db생성)
+	5. 웹서버 종료
+	- ctrl + c
+
+다. Django 프로젝트에 App 만들기
+	- django-admin startapp testapp (VS-code에 "testapp" 폴더가 생성)
+
+	* config 폴더 사용 2가지 py
+	- settings.py = 웹서버에 대한 전체 환경설정(기다리는 쪽)
+	- urls.py = URL을 받아내는 쪽(들어와서 요청하는 쪽)
+	* testapp 폴더 = backend, frontend 사용(.py는 backend)
+	- views.py
+	- models.py = DB 사용
+	- urls.py = config_urls.py 와 연동
+
+<개별 실습>
+	1. 작업 폴더 생성하기
+	- 작업 폴더명 : django_test
+	2. Django project 생성하기
+	- 프로젝트명 : config
+	3. 웹서버(Web Server) 실행 되는지 확인하기
+	4. Django 앱(App) 생성하기
+	- App명 :firstapp
+
+라. Anaconda Prompt
+	1. 가상환경 목록 보기
+	- conda env list
+	2. django 가상환경 만들기 (conda create --name 이름)
+	- conda create --name django
+	3. 생성된 django 가상환경 활성화하기(base -> django)
+	- conda activate django
+	- 앞으로 VS-code는 django 가상환경에서 Open
+	4. 가상환경에서 강의에 사용할 작업폴더, Django
+	- 작업폴더명 : tutorial
+	- Project명 : config .
+	- App명 : firstapp
+	5. 가상환경에서 django 설치
+	- conda install -c conda-forge django==4.0.1
+	6. django 버전 확인하기
+	- django-admin --version
+	7. 설치 확인하기
+	- conda list
+	- pip list
+
+마. Anaconda Prompt > django 가상환경에서 아래 실행하기
+
+	1. 아래 명령으로 라이브러리 설치
+	- 주피터노트북 설치 : pip install jupyter notebook
+	- 가상환경에서 커널 연결하기 : python -m ipykernel install --user --name django(가상환경이름) --display-name 작명
+	: python -m ipykernel install --user --name django --display-name django_kernel
+	-- 기본설치 라이브러리(1) : pip install ipython jupyter matplotlib pandas sklearn xlrd seaborn
+	-- 기본설치 라이브러리(2) : pip install openpyxl
+	
+	2. VS-code Open 하기 -> 아래 명령 실행하기
+	- code .
+	3. 웹서버(Web Server) 실행해보기
+	
+<실습>
+	..(base)에서
+	1. 가상환경 빠져나오기(base로 나오기) conda edactivate
+	2. 가상환경 이름 : django2
+	3. 커널이름 : django2-kernel
+	4. 주피터노트북에서 확인하기
+	
+	라이브러리 모두 설치
+
+	작업폴더 : tutorial_test
+
+	<django2>
+	1. 프로젝트명 : config
+	2. 서버시작.. 테스트
+	3. app명 : test1
+	4. 서버시작.. 테스트
+
+바. VS-code 확장 선택
+	- python 설치
+	- python for vscode
+	- python extension pack
+	- python indent
+	- python extended
+	- pylance
+	
+	-django
+	-django template
+	-django snippets
+	
+	-vscode-icons
+	-indent-rainbow
+	-bracket pair colorizer 2
+	
+기본 셋팅
+<config_settings.py Update 사항>
+	- ALLOWED_HOSTS , ['127.0.0.1']
+	- INSTALLED_APPS, 'firstapp',
+	- TEMPLATES 'DIRS': [BASE_DIR/'templates'], <- frontend 들어있는 곳 자동 연결
+	- DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+	- # LANGUAGE_CODE = 'en-us'
+		LANGUAGE_CODE = 'ko-kr'
+	-#TIME_ZONE = 'UTC'
+		TIME_ZONE = 'Asia/Seoul'
