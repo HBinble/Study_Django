@@ -1,0 +1,107 @@
+2DAY
+
+# Django 시작
+'''
+가상환경 : django 사용
+1. 어제만든 tutorial 작업폴더 삭제
+2. 작업폴더 tutorial 만들기
+3. config 프로젝트 만들기(웹서버 구동 테스트)
+4. firstapp 만들기
+5. settings.py 웹서버 환경설정
+6. 웹서버 최종 확인
+'''
+
+가. 서버 start
+
+1. firstapp>views.py 
+from django.http import HttpResponse
+
+def index1(request) :
+    return HttpResponse("<u>Hello...</u>")
+	
+2.config > urls.py
+
+from firstapp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('index1/', views.index1), (끝에 comma(,) 필수!)
+] 
+
+http://127.0.0.1:8000/index1/
+
+
+<프로그램 순서>
+1. app -> views.py에 함수 만들기
+2. config ->urls.py에 url 생성 및 함수 매핑
+3. 서버 실행 -> url 입력
+
+나. 프로젝트 구조/앱 생성
+1.django-admin startproject 이름
+2.django-admin startapp 이름
+
+다. 서버 구동
+python manage.py runserver
+
+라.웹페이지 주소 생성
+1. app -> views.py에 함수 만들기
+2. config ->urls.py에 url 생성 및 함수 매핑
+3. 서버 실행 -> url 입력
+
+* Django 정의
+MTV 패턴(Model, Template, View)
+- Model : 데이터처리(DB 테이블)
+- Template : 클라이언트에게 보여줄 UI(HTML, CSS, JS)
+- View : Controller 역할, 요청을 받은 후 [모델을 실행한 후] 응답
+
+	<구조>
+	웹은 클라이언트가 호출을 해야 동작하는 것이다.
+	웹순서의 반대가 프로그램 순서
+	url -> view -> DB -> HTML
+
+'''
+<실습>
+index2 url 만들기
+index2 함수 만들기
+응답 데이터는 <p>index2함수를 호출했습니다.</>
+'''
+	1. views
+	def index2(request) :
+		return HttpResponse("<p>index2 함수를 호출했습니다.</>")
+	2. urls
+	path('index2', views.index2),
+
+# 웹페이지 주소 생성
+- urls.py를 생성한 App별로 관리하기 위하여 config에서 분리하기
+
+가. firstapp > urls.py 만들기
+from django.urls import path
+from . import views
+urlpatterns = [
+    path('main/', views.main),
+] 
+http://127.0.0.1:8000/first/main/
+
+## 연습문제1
+home 주소 생성하기
+- 요구사항 1) 127.0.0.1:8000/home/ 주소 생성
+- 요구사항 2) tutorial/config/urls.py 파일 사용
+- 요구사항 3) tutorial/firstapp/views.py 파일 사용
+
+## 연습문제2
+secondapp 앱 생성하기
+- 요구사항 1) 127.0.0.1:8000//second/home/ 주소 생성
+- 요구사항 2) tutorial/secondapp/urls.py 파일 사용
+- 요구사항 3) tutorial/secondapp/views.py 파일 사용
+
+
+#DB Browser for SQLite Tool 다운로드
+VS code 설치
+- sqlite ->
+-sqltools sqlite
+-sqlite viewer
+-sqltools
+-database client
+
+https://sqlitebrowser.org/
+-> downloads
