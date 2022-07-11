@@ -1,0 +1,111 @@
+3DAY
+
+-- 강의
+
+★<웹서버 진행 순서>★
+1.웹브라우저 : URL입력 > 엔터 > 웹서버에 요청
+2. config > settings.py에서 도메인 확인
+3. config > urls.py에서 페이지분리 > app으로 나머지 뒤에 url 전달
+4. app > urls.py에서 url 받기 > views.py 함수 호출
+5. app > views.py에서 함수 실행
+	   > models.py에서 데이터 처리 > views.py에 전달
+	   > views.py에서 html 호출 > html에 데이터 담기
+6. 웹브라우저로 html 전달(return)
+
+<가상환경 만들기>
+* (base) 최초 한번만 만들면 됩니다.
+1. 가상환경 만들기 : conda create --name 가상환경이름
+2. 가상환경으로 들어가기 : conda activate 가상환경이름
+3. 커널만들기 : 
+(가상환경에서)
+3. 가상환경 빠져나오기 : conda deactivate
+4. 가상환경으로 들어간 후 라이브러리 설치
+1) conda install -c conda-forge 라이브러리 이름1, 라이브러리 이름2 ... 
+2) pip install 라이브러리 이름1, 라이브러리 이름2...
+5. 1~4번 까지는 최초 한번만 진행
+
+6. 이후 장고 프로젝트 시에는
+1) conda activate 가상환경이름
+2) 장고 작업폴더로 가기 : cd 작업폴더 위치로 이동
+3) code .으로 vscode 열기
+
+--필기
+
+가.Django 순서
+
+1. 프로젝트 시작시 1번만 수행
+1. config (startproject)
+- 2가지 폴더 주로 사용
+	웹서버 환경설정 settings.py
+	요청 시 받아들이는 곳 urls.py
+
+2. app 여러번 작성
+2. app (startapp)
+- 3가지 폴더 주로 사용
+	models.py
+	views.py
+	urls.py
+
+* 라이브러리 순서
+from 패키지 이름 import 파일이름
+
+* urls.py에서 views를 import 하는 이유
+from . import views
+- views의 함수를 불러오기 위해서
+
+
+'''
+<실습>
+1. 작업디렉토리 만들기 : testproj
+(가상환경에서)
+2. 프로젝트 만들기 : config
+3. app 만들기 testapp
+4. 요청 URL : http://127.0.0.1:8000/test/index1
+5. testapp에서 index1 url에 대한 함수 호출하여
+   아래 내용 응답해주기
+   "안녕하세요~ 오늘은 비가 옵니다."
+'''
+
+<DB>
+(django 가상환경)
+1. models.py 
+
+# class name == Table name(Curriculum Table 이름)
+class Curriculum(models.Model) :
+    # 변수 이름 == 컬럼 이름
+    name = models.CharField(max_length=255)
+
+2. Model 적용(sqlite 적용X) : python manage.py makemigrations [app 명]
+- python manage.py makemigrations firstapp
+
+3. DB에 적용(Model 건드린후 makemigrations -> migrate)
+- python manage.py migrate
+
+'''
+<연습문제>
+1. secondapp에 Course 모델 생성하기
+-요구사항 1) Course 모델 클래스 생성
+-요구사항 2) name(CharField-최대길이 30)
+			cnt(intergerField())
+2. secondapp의 Course모델을 사용하여 데이터 입력하기
+- 요구사항 1) 127.0.0.1:8000/second/insert/ 주소 생성
+- 요구사항 2) 1)의 주소로 접속할 때 아래와 같이 4개 데이터 입력
+
+'''
+
+<FrontEnd>
+1. settings.py > templates 항목을 각 app에서 만들어주기
+1) firstapp > templates\firstapp 새폴더 만들기
+2) \firstapp > show2.html 파일 만들기 (dj로 뜰 경우 하단에 html로 변경해주기)
+3) views.py
+# html 호출 함수 만들기
+def show2(request) :
+    return render(
+        request,
+        "firstapp/show2.html",
+        {}
+    )
+	
+	
+{%%} : 함수 사용 시
+{{}} : 데이터

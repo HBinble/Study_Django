@@ -20,21 +20,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-q$gp)#bek-90v#au8+@r@9*ym_ppgmgemu-ls8z-pig1=577bn'
+SECRET_KEY = 'django-insecure-(2^eety%#r=!z+lc5^=-s(mq((ahf-h(l2r9&2li*x(h2_jlt8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# UPDATE
 ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
 
-# UPDATE...
 INSTALLED_APPS = [
-    'secondapp',
-    'firstapp',
+    'testapp',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,7 +52,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
-# UPDATE...
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -78,7 +74,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# UPDATE...
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -109,9 +104,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-# UPDATE...
 LANGUAGE_CODE = 'ko-kr'
-# UPDATE...
+
 TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True

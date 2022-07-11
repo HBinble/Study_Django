@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <title>show2</title>    
+</head>
+<body>
+    <h1>Data 읽어들이기</h1>
+    <table border="1">
+        <tr>
+            <td>아이디</td>
+            <td>이름</td>
+            <td>갯수</td>
+        </tr>
+        {% for dt in data %}
+        <tr>
+            <td>{{dt.id}}</td>
+            <td>{{dt.name}}</td>
+            <td>{{dt.cnt}}</td>
+        </tr>
+        {% endfor %}  
+    </table>
+
+    <hr>
+
+    {% for dt in data%}
+        <h3>{{dt.id}} {{dt.name}} {{dt.cnt}}</h3>
+    {% endfor %}
+
+</body>
+</html>
