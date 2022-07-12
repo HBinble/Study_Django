@@ -1,0 +1,70 @@
+4DAY
+# 수정하기
+
+# 삭제하기
+
+* ORM 방식 (object) : sqlite
+- 모델에 클래스 객체 확인 방식
+
+# sqlite에서 사용하는 방식은 일반적이지 않음
+-> 일반적인 방법 : oracle 사용 방법
+
+#
+리스트 형태에서 튜플 형태로 가져오는것
+
+'''
+<연습>
+<dbapp 생성>
+1. models_pandas > cart.py 생성 후 DB 처리 함수 생성
+- getCartList() : 전체조회
+- getCart() : 한건조회
+
+2. view
+- view_Cart_List() : 전체조회
+- view_Cart : 한건조회
+
+3. html
+- cart 폴더 생성
+--> cart_list.html : 전체조회
+--> cart.html : 한건조회
+'''
+
+<SQL>
+-- cart 테이블의 주문번호 생성하기
+-- 현재 날짜의 주문번호가 있으면, + 1
+--  (주문번호 앞 8자리는 년월일을 의미합니다.)
+-- 없으면 현재 날짜의 신규 주문번호 생성
+-- 예시 : 2022071200001번 생성
+
+SELECT DECODE(SUBSTR(MAX(cart_no),1,8),
+                TO_CHAR(SYSDATE, 'YYYYMMDD'),
+                MAX(cart_no)+1,
+                TO_CHAR(SYSDATE, 'YYYYMMDD') || '00001') AS max_no
+  FROM cart;
+  
+  
+★★★ 순서 ★★★
+1. app 생성하기
+1) django-admin startapp [APP명]
+2) config > settings.py에서 INSTALLED_APPS 추가
+3) urls.py에서 url include 추가
+
+2. models_pandas 폴더 만들기 > cart.py 파일 
+1) import pandas, cx_Oracle
+2) DB 연결(dsn, conn,cursor) = getConnection, getCursor, dbClose
+3) 전체 조회 및 한건 조회 함수 만들기
+
+3. views.py에서 cart.py에서 보여줄 함수 연결
+1) from .model_pandas import cart
+2) 보여줄 함수 작성
+- 먼저 return HttpResponse("")로 연결되는지 확인
+- render(request, "/.html", {key : values})
+
+4. urls.py에서 urlpatterns 입력
+
+5. templates/[APP명] 폴더 > cart 폴더
+1) cart_list.html 파일 만들기
+- for문 = 
+{% for cols in df %} 
+{{cols}}
+{% endfor %}

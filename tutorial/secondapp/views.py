@@ -45,7 +45,7 @@ def show2(request) :
     )
     
 def oneshow2(request) :
-    onedata = Course.objects.get(pk=2)
+    onedata = Course.objects.get(pk=1)
     return render(
         request,
         "secondapp/oneshow2.html",

@@ -33,6 +33,8 @@ ALLOWED_HOSTS = ['127.0.0.1']
 
 # UPDATE...
 INSTALLED_APPS = [
+    'dbapp',
+    'oracleapp',
     'secondapp',
     'firstapp',
     'django.contrib.admin',
