@@ -19,6 +19,19 @@ def dbClose(cursor, conn) :
 
 ##### <실제 사용하는 함수> #####
 
+### 주문내역 전체조회
+def getCartList() :
+    conn = getConnection()
+    cursor = getCursor(conn)
+    
+    sql = """ SELECT * FROM cart """
+    cursor.execute(sql)
+    
+    row = cursor.fetchall()
+    
+    return row
+
+#######################################################################
 
 # 여러건 행에 대한 리스트 + 딕셔너리 만드는 함수
 def getDictType_FetchAll(col_name, row) :
@@ -36,8 +49,8 @@ def getDictType_FetchAll(col_name, row) :
     return list_row
 
 
-### 주문내역 전체조회
-def getCartList() :
+### 딕셔너리 주문내역 전체조회
+def getCartListDict() :
     conn = getConnection()
     cursor = getCursor(conn)
     
@@ -59,6 +72,7 @@ def getCartList() :
     
     return row_list
     
+##########################################################################
 
 # 한건 행에 대한 딕셔너리 만드는 함수 
 def getDictType_FetchOne(col_name, row_one) :
@@ -129,7 +143,7 @@ def setCartInsert(id, prod, qty) :
     return "입력 성공..."
 
 # 주문내역 삭제하기
-def setCartInsert(no, prod) :
+def setCartDelete(no, prod) :
     conn = getConnection()
     cursor = getCursor(conn)
     

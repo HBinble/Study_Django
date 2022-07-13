@@ -72,4 +72,40 @@ def getMember(id) :
     
     return dict_row
 
+
+
+# 여러건 행에 대한 리스트 + 딕셔너리 만드는 함수
+def getDictType_FetchAll(col_name, row) :
+    list_row = []
+    for tup in row :
+        dict_row = {}
+        
+        for i in range(0, len(tup), 1) :
+            dict_row[col_name[i].lower()] = tup[i]
+            
+        list_row.append(dict_row)
+    return list_row
+
+
+### 멤버 전체 리스트 조회
+def getMemberListDict() :
+    conn = getConnection()
+    cursor = getCursor(conn)
     
+    sql = """ SELECT * FROM member """
+    cursor.execute(sql)
+    
+    row = cursor.fetchall()
+    
+    # 컬럼명 조회하기
+    colname = cursor.description
+    col = []
+    for i in colname :
+        col.append(i[0])
+    
+    # 딕셔너리로 데이터 구성하기..
+    row_list = getDictType_FetchAll(col, row)
+    
+    dbClose(cursor, conn)
+    
+    return row_list

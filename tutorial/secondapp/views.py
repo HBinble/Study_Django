@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from secondapp.models import Course
+from .model_pandas import lprod 
 
 def main(request) :
     return HttpResponse("<p>Secondapp Main 함수 호출</p>")
@@ -50,4 +51,34 @@ def oneshow2(request) :
         request,
         "secondapp/oneshow2.html",
         {"onedata" : onedata}
+    )
+    
+    
+
+### lpord 함수
+
+#lprod_list
+def view_Lprod_List(request) : 
+    df_list = lprod.getLprodList()
+    
+    context = {"df_list" : df_list}
+    
+    return render(
+        request,
+        "html/lprod_list.html",
+        context        
+    )
+
+
+# lprod
+def view_Lprod(request) : 
+    df_dict = lprod.getLprod("P101")
+    
+    # context = {"df" : df}
+    # return HttpResponse(df_dict)
+    
+    return render(
+        request,
+        "html/lprod.html",
+        df_dict
     )

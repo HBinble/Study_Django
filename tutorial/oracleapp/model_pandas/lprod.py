@@ -36,12 +36,12 @@ def getDictType_FetchAll(col_name, row) :
     return list_row
 
 
-### 주문내역 전체조회
-def getCartList() :
+### 상품분류조회 전체 리스트 조회
+def getLprodList() :
     conn = getConnection()
     cursor = getCursor(conn)
     
-    sql = """ SELECT * FROM cart """
+    sql = """ SELECT * FROM lprod """
     cursor.execute(sql)
     
     row = cursor.fetchall()
@@ -58,7 +58,7 @@ def getCartList() :
     dbClose(cursor, conn)
     
     return row_list
-    
+
 
 # 한건 행에 대한 딕셔너리 만드는 함수 
 def getDictType_FetchOne(col_name, row_one) :
@@ -68,17 +68,15 @@ def getDictType_FetchOne(col_name, row_one) :
         dict_row[col_name[i].lower()] = row_one[i] 
     return dict_row
 
-### 주문내역 상세조회 - 한건조회
-def getCart(no, prod) : 
+### 상품분류정보 상세조회 - 한건조회
+def getLprod(gu) : 
     conn = getConnection()
     cursor = getCursor(conn)
     
-    sql = """ SELECT * FROM cart 
-                WHERE cart_no = :cart_no
-                AND cart_prod = :cart_prod """
+    sql = """ SELECT * FROM lprod 
+                WHERE lprod_gu = :lprod_no """
     cursor.execute(sql,
-                    cart_no=no,
-                    cart_prod=prod)
+                    lprod_no=gu)
     
     # 한건 조회
     row = cursor.fetchone()
@@ -95,56 +93,3 @@ def getCart(no, prod) :
     dbClose(cursor,conn)
     
     return dict_row
-
-# 주문내역 입력하기
-def setCartInsert(id, prod, qty) :
-    conn = getConnection()
-    cursor = getCursor(conn)
-    
-    # 주문번호 생성을 위한 sql문 작성
-    sql = """ SELECT DECODE(SUBSTR(MAX(cart_no),1,8),
-                TO_CHAR(SYSDATE, 'YYYYMMDD'),
-                MAX(cart_no)+1,
-                TO_CHAR(SYSDATE, 'YYYYMMDD') || '00001') AS max_no
-                FROM cart  """
-    cursor.execute(sql)
-    
-    # 한건 조회
-    max_no = cursor.fetchone()
-    no = max_no[0]
-    
-    # 주문내역 입력을 위한 sql문 작성
-    sql = """ INSERT INTO cart(cart_member, cart_no, cart_prod, cart_qty)
-                    VALUES(:cart_member, :cart_no, :cart_prod, :cart_qty) """
-    cursor.execute(sql,
-                    cart_member = id,
-                    cart_no = no,
-                    cart_prod = prod,
-                    cart_qty = qty)
-    
-    conn.commit()
-    
-    dbClose(cursor,conn)
-    
-    return "입력 성공..."
-
-# 주문내역 삭제하기
-def setCartInsert(no, prod) :
-    conn = getConnection()
-    cursor = getCursor(conn)
-    
-    
-    # 주문내역 삭제를 위한 sql문 작성
-    sql = """ DELETE FROM cart
-                WHERE cart_no = :cart_no
-                AND cart_prod = :cart_prod """
-                
-    cursor.execute(sql,
-                    cart_no = no,
-                    cart_prod = prod)
-    
-    conn.commit()
-    
-    dbClose(cursor,conn)
-    
-    return "삭제 성공..."

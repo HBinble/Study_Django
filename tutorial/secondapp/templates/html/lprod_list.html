@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>상품분류정보 리스트 조회하기</title>
+    </head>
+    <body>
+        <h2>상품분류정보</h2>
+            <table border="1">
+                <tr style="background-color:yellow;">
+                    <th>순서</th>
+                    <th>상품분류코드</th>
+                    <th>상품분류명</th>
+                </tr>
+                {% for d in df_list %}
+                <tr>
+                    <td>
+                        <a href = "http://127.0.0.1:8000/second/lprod/">{{d.lprod_id}}</a>
+                    </td>
+                    <td>{{d.lprod_gu}}</td>
+                    <td>{{d.lprod_nm}}</td>
+                </tr>
+                {% endfor %}  
+            </table>
+    </body>
+</html>

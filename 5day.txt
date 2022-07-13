@@ -1,0 +1,80 @@
+5DAY
+# 
+render 
+html parsor의 구조 : dictionary
+json 전체 list 안에 dictionary
+html 해석 tag -> list - dictionary - key 값으로 해석
+
+1.select 결과
+1) list 안에 tuple 형태
+- 전체 for문을 돌려서 다 가져와야 한다.
+2) 따라서 list 안에 각각의 행들을 dictionary로 만들어서 key 값으로 하나씩 불러올 수 있다.
+
+# tuple 하나가 행이다.
+# dictionary는 .으로 접근
+
+
+★★★딕셔너리 전체를 담을 리스트 변수★★★
+row = [(1, 2, 3), (4, 5, 6)]
+col_name = ['no1', 'no2', 'no3']
+
+list_row = []
+
+for tup in row :
+    print(tup)
+    dict_row = {}
+    
+    for i in range(0, len(tup), 1) :
+        print(tup[i])
+        dict_row[col_name[i]] = tup[i]
+    print(dict_row)
+    list_row.append(dict_row)
+print(list_row) 
+
+''' ★MVT 모델
+<실습>
+1. model_pandas 폴더 생성
+- lprod.py 파일 생성 : getLprodList(), getLprod() 함수 생성
+
+2. views.py
+-view_Lpord_List() 함수 생성
+-view_Lpord() 함수 생성
+
+3.templates/ html
+-lprod_list.html 생성
+-lprod.html 생성
+ (한건 조회하기 위한 조건값은 PK값 임의로 선택)
+ 
+4. lprod_list에서
+- 상품분류명 클릭하면 lprod.html로 링크 처리
+'''
+1. M - V : function
+2. V - T : render
+
+
+# 매개변수(parameter)
+1. Html (/ -> ? & 마지막 / 제거)
+"http://127.0.0.1:8000/oracle/lprod
+?lprod_gu={{d.lprod_gu}}"
+
+2. views
+    lprod_gu = request.GET["lprod_gu"]
+GET / POST
+
+### DML 은 SQLdevelper에서 먼저 시험하고 반영하기
+SELECT * 
+  FROM cart
+ WHERE cart_no = '2005040100001'
+   AND cart_prod = 'P101000001';
+   
+DELETE FROM cart
+ WHERE cart_no = '2005040100001'
+   AND cart_prod = 'P101000001';
+   
+ROLLBACK;
+
+# page
+목록 삭제 수정 입력
+
+입력 : 입력 페이지/ 저장된 페이지
+수정 : 수정 페이지/ 저장된 페이지
