@@ -110,6 +110,8 @@ def getCart(no, prod) :
     
     return dict_row
 
+##########################################################################
+
 # 주문내역 입력하기
 def setCartInsert(id, prod, qty) :
     conn = getConnection()
@@ -185,3 +187,4 @@ def setCartUpdate(no, prod, qty) :
     dbClose(cursor,conn)
     
     return "Y"
+

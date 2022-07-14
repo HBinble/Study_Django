@@ -1,10 +1,10 @@
-import re
 from django.http import HttpResponse
 from django.shortcuts import render
 
 from .model_pandas import member as mem
 from .model_pandas import cart
-from .model_pandas import lprod 
+from .model_pandas import lprod
+from .model_pandas import login 
 
 # Create your views here.
 
@@ -89,7 +89,7 @@ def view_Cart_List_dict(request) :
     )
 
 
-# 주문내역 상세조회
+# 주문내역 상세조회(한건 조회)
 def view_Cart(request) : 
     
     pcart_no = request.GET["pcart_no"]
@@ -241,7 +241,7 @@ def set_Cart_Update(request) :
     # )
 
 
-#############################################################
+############################# Lprod ################################
 
 
 # def testDict(request) :
@@ -290,3 +290,74 @@ def view_Lprod(request) :
         "oracleapp/lprod/lprod.html",
         df_dict
     )
+    
+############################# 로그인 화면 ################################
+
+def login_form(request) :
+    return render(
+    request,
+    "oracleapp/login/login_form.html",
+    {}
+    )
+
+def get_Login(request) :
+    pmem_id = request.POST["mem_id"]
+    pmem_pass = request.POST["mem_pass"]
+    
+    # 아이디 패스워드 확인 모델 호출(한건 조회)
+    df_dict = login.getLogin(pmem_id, pmem_pass)
+    
+    # 로그인 실패 시 처리
+    if df_dict["rs"] == "no" :
+        context = """<script>
+                        alert("아이디 또는 패스워드를 확인하여 주세요!")
+                        history.go(-1)
+                    </script>"""
+        return HttpResponse(context)
+    
+    # Session 처리 (회원 정보를 서버에 저장해 놓고 있는 상태)
+    # - 로그아웃 하기 전까지 회원 정보는 어느 페이지를 가던지 살아있습니다.
+    # - request.session[]을 통해서 사용합니다.
+    # - session에 저장되는 값들은 딕셔너리 형태로 저장됨
+    
+    # session 등록하기
+    request.session["sMem_id"] = pmem_id
+    request.session["sMem_name"] = df_dict["mem_name"]
+    
+    # session에 저장된 값 불러오기
+    if request.session.get("sMem_id") : 
+        # 세션에 값이 있는 경우
+        df_dict["sMem_id"] = request.session["sMem_id"]
+        df_dict["sMem_name"] = request.session["sMem_name"]
+    else :
+        # 세션에 값이 없는 경우(악의적으로 url 직접 입력해서 들어오는 경우)
+        df_dict["sMem_id"] = None
+        
+    df_dict["pmem_id"] = pmem_id
+    df_dict["pmem_pass"] = pmem_pass
+
+    return render(
+    request,
+    # "oracleapp/login/login.html",
+    "oracleapp/login/login_form.html",
+    df_dict
+    )
+    
+def set_Logout(request) :
+    # 세션정보 확인하기
+    if request.session.get("sMem_id") :
+        # 세션정보 삭제하기
+        request.session.flush()
+        
+        context = """<script>
+                        alert("로그아웃 되었습니다.")
+                        location.href = "/oracle/login_form/"
+                    </script>"""
+        return HttpResponse(context)
+    
+    else :
+        context = """<script>
+                        alert("직접 접근하시면 안됩니다!!! @ 로그인 페이지로 이동.")
+                        location.href = "/oracle/login_form/"
+                    </script>"""
+    return HttpResponse(context)
