@@ -1,0 +1,7 @@
+6DAY
+
+1. 서버 페이지 소스 보기
+http://127.0.0.1:8000/oracle/cart_list_dict/ 
+2. response 서버는 모르고 클라이언트만 안다 (hidden에 넣어놓음 : 클라이언트 실행을 추적하기 위해)
+1) http://127.0.0.1:8000/oracle/cart/?cart_no=2005040100002&cart_prod=P101000002 (클라이언트에 심어서 넘김)
+2) http://127.0.0.1:8000/oracle/cart_update_form/?cart_no=2005040100002&cart_prod=P101000002 (클라이언트에 심어서 넘김)

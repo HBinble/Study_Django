@@ -11,11 +11,12 @@
             }
         </script>
     </head>
-    <body>
-    <form name="fm" id="fm" method="post" action="/oracle/cart_update">
-        <input type="hidden" name="cart_no" value="{{pcart_no}}">
-        <input type="hidden" name="cart_prod" value="{{pcart_prod}}">
 
+    <body>
+    <form name="fm" id="fm" method="post" action="/oracle/cart_update/">
+        <input type="hidden" name="pcart_no" value="{{pcart_no}}">
+        <input type="hidden" name="pcart_prod" value="{{pcart_prod}}">
+        {% csrf_token %}
         <h2>주문 상세 수정</h2>
 
         <table border="1">
@@ -40,4 +41,5 @@
         <a href="#" onclick="send();">[저장]</a>
     </form>
     </body>
+
 </html>

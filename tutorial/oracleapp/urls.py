@@ -9,6 +9,7 @@ urlpatterns = [
     path('member_list_dict/', views.view_Member_List_dict),
     path('cart_list/', views.view_Cart_List),
     path('cart/', views.view_Cart),
+    path('cart_insert_form/', views.view_Cart_Insert),
     path('cart_insert/', views.set_Cart_Insert),
     path('testdict/', views.testDict),
     path('cart_list_dict/', views.view_Cart_List_dict),
@@ -16,4 +17,5 @@ urlpatterns = [
     path('lprod/', views.view_Lprod),
     path('cart_delete/', views.set_Cart_Delete),
     path('cart_update_form/', views.view_Cart_Update),
+    path('cart_update/', views.set_Cart_Update),
 ] 

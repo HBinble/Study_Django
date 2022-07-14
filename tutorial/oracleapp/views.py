@@ -16,6 +16,8 @@ def test(request) :
         {}
     )
 
+############################## 조회 ##############################
+
 # 회원 딕셔너리 전체 조회하기
 def view_Member_List_dict(request) :
     
@@ -90,10 +92,10 @@ def view_Cart_List_dict(request) :
 # 주문내역 상세조회
 def view_Cart(request) : 
     
-    cart_no = request.GET["cart_no"]
-    cart_prod = request.GET["cart_prod"]
+    pcart_no = request.GET["pcart_no"]
+    pcart_prod = request.GET["pcart_prod"]
     
-    df_dict = cart.getCart(cart_no, cart_prod)
+    df_dict = cart.getCart(pcart_no, pcart_prod)
     
     # context = {"df" : df}
     # return HttpResponse(df_dict)
@@ -104,46 +106,142 @@ def view_Cart(request) :
         df_dict
     )
     
-# 주문내역 입력하기
+############################## 입력, 수정, 삭제 ##############################
+
+# 입력 폼(form)
+def view_Cart_Insert(request) : 
+    pcart_member = "e001"
+    pcart_prod = "P102000001"
+
+    return render(
+        request,
+        "oracleapp/cart/cart_insert_form.html",
+        {"pcart_member":pcart_member, "pcart_prod":pcart_prod}
+    )
+
+# 주문내역 입력하기(html)
 def set_Cart_Insert(request) : 
-    id = "e001"
-    prod = "P102000001"
-    qty = 17
+
+    pcart_member = request.POST["pcart_member"]
+    pcart_prod = request.POST["pcart_prod"]
+    cart_qty = request.POST["cart_qty"]
     
-    msg = cart.setCartInsert(id, prod, qty)
+    msg = cart.setCartInsert(pcart_member, pcart_prod, cart_qty)
     
-    return HttpResponse(msg)
+    # return render(
+    # request,
+    # "oracleapp/cart/cart_insert.html",
+    # {"msg" : msg}
+    # )
+    
+    pageControl = ""
+    
+    if msg == "Y" : 
+        pageControl = """<script>
+                            alert("입력 되었습니다!!!")
+                            location.href="/oracle/cart_list_dict/"
+                        </script>
+        """
+    else :
+        pageControl = """<script>
+                            alert("입력 실패!!!")
+                            history.go(-1)
+                        </script>
+        """
+    return HttpResponse(pageControl)
+    
+# # 주문내역 입력하기 (자체 입력)
+# def set_Cart_Insert(request) : 
+#     id = "e001"
+#     prod = "P102000001"
+#     qty = 17
+    
+#     msg = cart.setCartInsert(id, prod, qty)
+    
+#     return HttpResponse(msg)
 
 # 주문내역 삭제하기
 def set_Cart_Delete(request) : 
     
-    cart_no = request.GET["cart_no"]
-    cart_prod = request.GET["cart_prod"]
+    pcart_no = request.GET["pcart_no"]
+    pcart_prod = request.GET["pcart_prod"]
     
-    msg = cart.setCartDelete(cart_no, cart_prod)
+    msg = cart.setCartDelete(pcart_no, pcart_prod)
     
-    return render(
-        request,
-        "oracleapp/cart/cart_delete.html",
-        {"msg" : msg}
-    )
+    pageControl = ""
+    
+    if msg == "Y" : 
+        pageControl = """<script>
+                            alert("삭제 되었습니다!!!")
+                            location.href="/oracle/cart_list_dict/"
+                        </script>
+        """
+    else :
+        pageControl = """<script>
+                            alert("삭제 실패!!!")
+                            history.go(-1)
+                        </script>
+        """
+    return HttpResponse(pageControl)
+    
+    # return render(
+    #     request,
+    #     "oracleapp/cart/cart_delete.html",
+    #     {"msg" : msg}
+    # )
 
-# 주문내역 삭제하기
+# 주문내역 수정하기
 def view_Cart_Update(request) : 
     
-    pcart_no = request.GET["cart_no"]
-    pcart_prod = request.GET["cart_prod"]
+    pcart_no = request.GET["pcart_no"]
+    pcart_prod = request.GET["pcart_prod"]
     
-    # msg = cart.setCartDelete(cart_no, cart_prod)
+    df_dict = cart.getCart(pcart_no, pcart_prod)
     
-    context = {"pcart_no" : pcart_no, 
-                "pcart_prod" : pcart_prod}
+    # context = {"pcart_no" : pcart_no, 
+    #             "pcart_prod" : pcart_prod}
+    df_dict["pcart_no"] = pcart_no
+    df_dict["pcart_prod"] = pcart_prod
     
     return render(
         request,
         "oracleapp/cart/cart_update_form.html",
-        context
+        df_dict    
     )
+
+# 수정 처리
+def set_Cart_Update(request) : 
+    
+    pcart_no = request.POST["pcart_no"]
+    pcart_prod = request.POST["pcart_prod"]
+    cart_qty = request.POST["cart_qty"]
+    
+    msg = cart.setCartUpdate(pcart_no, pcart_prod, cart_qty)
+    
+    pageControl = ""
+    
+    if msg == "Y" : 
+        pageControl = """<script>
+                            alert("수정 되었습니다!!!")
+                            location.href="/oracle/cart_list_dict/"
+                        </script>
+        """
+    else :
+        pageControl = """<script>
+                            alert("수정 실패!!!")
+                            history.go(-1)
+                        </script>
+        """
+    return HttpResponse(pageControl)
+
+    # return render(
+    #     request,
+    #     "oracleapp/cart/cart_update.html",
+    #     {"msg" : msg}
+    # )
+
+
+#############################################################
 
 
 # def testDict(request) :

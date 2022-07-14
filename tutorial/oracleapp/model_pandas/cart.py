@@ -140,7 +140,7 @@ def setCartInsert(id, prod, qty) :
     
     dbClose(cursor,conn)
     
-    return "입력 성공..."
+    return "Y"
 
 # 주문내역 삭제하기
 def setCartDelete(no, prod) :
@@ -161,4 +161,27 @@ def setCartDelete(no, prod) :
     
     dbClose(cursor,conn)
     
-    return "삭제 성공..."
+    return "Y"
+
+# 주문내역 수정하기
+def setCartUpdate(no, prod, qty) :
+    conn = getConnection()
+    cursor = getCursor(conn)
+    
+    
+    # 주문내역 삭제를 위한 sql문 작성
+    sql = """ UPDATE cart 
+                SET cart_qty = :cart_qty
+                WHERE cart_no = :cart_no
+                AND cart_prod = :cart_prod """
+                
+    cursor.execute(sql,
+                    cart_qty = qty,
+                    cart_no = no,
+                    cart_prod = prod)
+    
+    conn.commit()
+    
+    dbClose(cursor,conn)
+    
+    return "Y"
