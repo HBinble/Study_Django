@@ -2,6 +2,8 @@ from django.urls import path
 
 from . import views
 
+app_name = "oracle"
+
 urlpatterns = [
     path('test/', views.test),
     path('member_list/', views.view_Member_List),
@@ -21,4 +23,5 @@ urlpatterns = [
     path('login_form/', views.login_form),
     path('login/', views.get_Login),
     path('logout/', views.set_Logout),
+    path('cart_list_page/', views.view_Cart_List_Page, name="cart_list_page"),
 ] 
