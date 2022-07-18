@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['127.0.0.1']
 
 # UPDATE...
 INSTALLED_APPS = [
+    'frontendapp',
     'dbapp',
     'oracleapp',
     'secondapp',
