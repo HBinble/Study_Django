@@ -8,4 +8,6 @@ urlpatterns = [
     path('index_css02/', views.index_02),
     path('index_css03/', views.index_03),
     path('index_css04/', views.index_04),
+    path('index_css05/', views.index_05),
+    path('index_css06/', views.index_06),
 ]

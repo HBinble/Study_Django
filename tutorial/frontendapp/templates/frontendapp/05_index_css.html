@@ -8,7 +8,7 @@
 <!-- Javascript, css 등의 처리를 기본적으로 수행 -->
 
 <head>
-    <title>::: index-04 페이지 :::</title>
+    <title>::: index-05 페이지 :::</title>
 
     <!-- sytle : css 적용 방법 3번..head 안에 style 영역지정 -->
     <link href="{% static '/frontendapp/css/practice.css' %}" rel="stylesheet" type="text/css">
@@ -20,12 +20,6 @@
     <!-- 메뉴 만들기 -->
     <!-- 링크 주소는 urls.py의 URL과 동일하게 작성.. -->
     <nav>
-        <!-- 한곳에서 관리할 수 있도록 include 처리 -->
-        <!-- <a href="/frontend/sample01">[sample]</a> |
-        <a href="/frontend/index01">[index01]</a> |
-        <a href="/frontend/index_css02">[index_css02]</a> |
-        <a href="/frontend/index_css03">[index_css03]</a> |
-        <a href="/frontend/index_css04">[index_css04]</a> -->
         <!-- 한곳에서 관리할 수 있도록 include 처리 -->
         {% include 'frontendapp/include/nav.html' %}
     </nav>

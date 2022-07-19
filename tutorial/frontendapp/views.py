@@ -36,3 +36,17 @@ def index_04(request) :
         "frontendapp/04_index_css.html",
         {}
     )
+    
+def index_05(request) :
+    return render(
+        request,
+        "frontendapp/05_index_css.html",
+        {}
+    )
+    
+def index_06(request) :
+    return render(
+        request,
+        "frontendapp/06_index_css.html",
+        {}
+    )
